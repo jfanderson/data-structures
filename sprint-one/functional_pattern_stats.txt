@@ -1,0 +1,30 @@
+1 Million Instances
+
+Queues:
+	Functional:
+		Time: 1.96 seconds
+		Size: 387 MB
+	Functional-shared:
+		Time: 3.24 seconds
+		Size: 97.2 MB
+	Prototypal:
+		Time: 336 ms
+		Size: 121 MB
+	Pseudoclassical:
+		Time: 558 ms
+		Size: 98.6 MB
+Stacks:
+	Functional:
+		Time: 1.92 seconds
+		Size: 388 MB
+	Functional-shared:
+		Time: 3.98 seconds
+		Size: 97.5 MB
+	Prototypal:
+		Time: 948 ms
+		Size: 120 MB
+	Pseudoclassical:
+		Time: 1.07 seconds
+		Size: 97.5 MB
+
+The data above illustrates that prototypal is the optimal choice when time is the utmost consideration, and either functional-shared or pseudoclassical are best for memory concerns. Despite its good memory usage, functional-shared is very slow in comparison to the other patterns. Our final recommendation would be pseudoclassical, for it is nearly best in memory usage, and also a close second in timing.
