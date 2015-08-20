@@ -5,7 +5,6 @@ var HashTable = function(){
 };
 
 HashTable.prototype.insert = function(k, v){
-  console.log(this._cache);
   if (k in this._cache) {
     this._storage.set(this._cache[k], v);
   } else {
@@ -48,4 +47,8 @@ HashTable.prototype.remove = function(k){
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ * Constructor: O(1)
+ * insert:      O(n)
+ * retrieve:    O(1)
+ * remove:      O(1)
  */
