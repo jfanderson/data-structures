@@ -48,10 +48,10 @@ describe('tree', function() {
     tree.addChild(6);
     tree.children[0].addChild(7);
     tree.children[0].addChild(8);
-    var newTree = tree.children[0].removeFromParent();
-    expect(newTree.contains(5)).to.equal(true);
-    expect(newTree.contains(4)).to.equal(false);
-    expect(newTree.contains(7)).to.equal(true);
+    var tree2 = tree.children[0].removeFromParent();
+    expect(tree2.contains(5)).to.equal(true);
+    expect(tree2.contains(4)).to.equal(false);
+    expect(tree2.contains(7)).to.equal(true);
     expect(tree.contains(5)).to.equal(false);
     expect(tree.contains(4)).to.equal(true);
     expect(tree.contains(8)).to.equal(false);
