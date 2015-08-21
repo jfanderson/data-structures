@@ -1,9 +1,9 @@
-var doublyLinkedList = function(){
+var doublyLinkedList = function() {
   var list = {};
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(value){
+  list.addToTail = function(value) {
     if (list.head === null) {
       list.head = Node(value);
       list.tail = list.head;
@@ -13,6 +13,14 @@ var doublyLinkedList = function(){
     }
   };
 
+  list.addToHead = function(value) {
+
+  }
+
+  list.removeTail = function() {
+    
+  }
+
   list.removeHead = function(){
     var value = list.head.value;
     list.head = list.head.next;
@@ -20,7 +28,7 @@ var doublyLinkedList = function(){
     return value;
   };
 
-  list.contains = function(target){
+  list.contains = function(target) {
     var temp = list.head;
     while (temp) {
       if (temp.value === target) {
@@ -34,11 +42,12 @@ var doublyLinkedList = function(){
   return list;
 };
 
-var Node = function(value){
+var Node = function(value) {
   var node = {};
 
   node.value = value;
   node.next = null;
+  node.previous = previous
 
   return node;
 };
