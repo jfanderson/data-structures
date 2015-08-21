@@ -9,22 +9,46 @@ var DoublyLinkedList = function() {
       list.tail = list.head;
     } else {
       list.tail.next = dNode(value);
+      list.tail.next.previous = list.tail;
       list.tail = list.tail.next;
     }
   };
 
   list.addToHead = function(value) {
-
+    if (list.head === null) {
+      list.head = dNode(value);
+      list.tail = list.head;
+    } else {
+      var newHead = dNode(value);
+      newHead.next = list.head;
+      list.head = newHead;
+    }
   }
 
   list.removeTail = function() {
+    var value  = list.tail.value;
 
+    if (list.head.next === null) {
+      list.head = null;
+      list.tail = null;
+    } else {
+      list.tail = list.tail.previous;
+      list.tail.next = null;      
+    }
+
+    return value;
   }
 
   list.removeHead = function(){
     var value = list.head.value;
-    list.head = list.head.next;
 
+    if (list.tail.previous === null) {
+      list.head = null;
+      list.tail = null;
+    } else { 
+      list.head = list.head.next;
+      list.head.previous = null;
+    }
     return value;
   };
 
