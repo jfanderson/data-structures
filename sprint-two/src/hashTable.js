@@ -1,45 +1,61 @@
 var HashTable = function(){
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  this._cache = {};
 };
 
-HashTable.prototype.insert = function(k, v){
-  if (k in this._cache) {
-    this._storage.set(this._cache[k], v);
-  } else {
-    var i = getIndexBelowMaxForKey(k, this._limit);
-    if (this._storage.get(i)) {
-      for (var j = 0; j < this._limit; j++) {
-        if (this._storage.get(j)) {
-          continue;
-        } else {
-          this._storage.set(j, v);
-          this._cache[k] = j;
-          break;
-        }
+HashTable.prototype.insert = function(k, v) {
+  var i = getIndexBelowMaxForKey(k, this._limit);
+  var bucket = this._storage.get(i);
+
+  if (bucket) {
+    var overwrote = false;
+
+    for (var j = 0; j < bucket.length; j++) {
+      if (bucket[j][0] === k) {
+        bucket[j] = [k, v];
+        this._storage.set(i, bucket);
+        overwrote = true;
+
+        break;
       }
-    } else {
-      this._storage.set(i, v);
-      this._cache[k] = i;
     }
+
+    if (!overwrote) {
+      bucket.push([k, v]);
+      this._storage.set(i, bucket);
+    }
+
+  } else {
+    this._storage.set(i, [[k,v]]);
   }
 };
 
-HashTable.prototype.retrieve = function(k){
-  if (k in this._cache) {
-    var i = this._cache[k];
-    return this._storage.get(i);
+HashTable.prototype.retrieve = function(k) {
+  var i = getIndexBelowMaxForKey(k, this._limit);
+  var bucket = this._storage.get(i);
+
+  if (bucket.length) {
+    for (var j = 0; j < bucket.length; j++) {
+      if (bucket[j][0] === k) {
+        return bucket[j][1];
+      }
+    }
   } else {
     return null;
   }
 };
 
-HashTable.prototype.remove = function(k){
-  if (k in this._cache) {
-    var i = this._cache[k];
-    this._storage.set(i, null);
-    delete this._cache[k];
+HashTable.prototype.remove = function(k) {
+  var i = getIndexBelowMaxForKey(k, this._limit);
+  var bucket = this._storage.get(i);
+  
+  if (bucket.length) {
+    for (var j = 0; j < bucket.length; j++) {
+      if (bucket[j][0] === k) {
+        bucket.splice(j, 1);
+        this._storage.set(i, bucket);
+      }
+    }
   }
 };
 
