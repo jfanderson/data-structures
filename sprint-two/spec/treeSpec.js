@@ -2,13 +2,15 @@ describe('tree', function() {
   var tree;
 
   beforeEach(function() {
-    tree = Tree();
+    tree = Tree(4);
   });
 
-  it('should have methods named "addChild" and "contains", and a property named "value"', function() {
+  it('should have methods named "addChild", "contains", and "removeFromParent", and properties named "value" and "parent"', function() {
     expect(tree.addChild).to.be.a("function");
     expect(tree.contains).to.be.a("function");
+    expect(tree.removeFromParent).to.be.a("function");
     expect(tree.hasOwnProperty("value")).to.equal(true);
+    expect(tree.hasOwnProperty("parent")).to.equal(true);
   });
 
   it('should add children to the tree', function() {
@@ -39,6 +41,20 @@ describe('tree', function() {
     tree.children[1].addChild(8);
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
+  });
+
+  it('should disassociate tree from parent when removeFromParent called', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild(8);
+    var newTree = tree.children[0].removeFromParent();
+    expect(newTree.contains(5)).to.equal(true);
+    expect(newTree.contains(4)).to.equal(false);
+    expect(newTree.contains(7)).to.equal(true);
+    expect(tree.contains(5)).to.equal(false);
+    expect(tree.contains(4)).to.equal(true);
+    expect(tree.contains(8)).to.equal(false);
   });
 
 });
