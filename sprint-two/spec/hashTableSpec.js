@@ -48,7 +48,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit('should double in size when needed', function() {
+  it('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0], lastName = person[1];
       hashTable.insert(firstName,lastName);
@@ -68,5 +68,22 @@ describe('hashTable', function() {
     hashTable.remove('John');
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
+  });
+
+  it('should increase the total when inserting a value', function() {
+    hashTable.insert('Keith', 3);
+    expect(hashTable._total).to.equal(1);
+    hashTable.insert('John', "Anderson");
+    expect(hashTable._total).to.equal(2);
+  });
+
+  it('should decrease the total when removing a value', function() {
+    hashTable.insert('Keith', 3);
+    hashTable.insert('John', "Anderson");
+
+    hashTable.remove('Keith');
+    expect(hashTable._total).to.equal(1);
+    hashTable.remove('John');
+    expect(hashTable._total).to.equal(0);
   });
 });

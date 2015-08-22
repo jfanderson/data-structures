@@ -1,6 +1,7 @@
 var HashTable = function(){
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  this._total = 0;
 };
 
 HashTable.prototype.insert = function(k, v) {
@@ -23,10 +24,22 @@ HashTable.prototype.insert = function(k, v) {
     if (!overwrote) {
       bucket.push([k, v]);
       this._storage.set(i, bucket);
+      checkDouble.call(this);
+      this._total++;
     }
 
   } else {
     this._storage.set(i, [[k,v]]);
+    checkDouble.call(this);
+    this._total++;
+  }
+
+  function checkDouble() {
+    console.log(this._total);
+    if (this._total + 1 >= Math.round(this._limit * .75)) {
+      this._limit *= 2;
+    }
+    console.log(this._total);
   }
 };
 
@@ -54,6 +67,7 @@ HashTable.prototype.remove = function(k) {
       if (bucket[j][0] === k) {
         bucket.splice(j, 1);
         this._storage.set(i, bucket);
+        this._total--;
       }
     }
   }
