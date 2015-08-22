@@ -32,7 +32,7 @@ treeMethods.contains = function(target) {
 };
 
 treeMethods.traverse = function(cb) {
-  cb(this);  // current node
+  cb(this.value);  // current node
 
   var children = this.children;
   if (children.length) {
