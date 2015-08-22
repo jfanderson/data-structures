@@ -57,4 +57,19 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(false);
   });
 
+  it('should execute a callback in depth-first order when traverse is called', function() {
+    var nums = [];
+
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].addChild(8);
+
+    tree.traverse(function(item) {
+      nums.push(item.value);
+    });
+
+    expect(nums).to.eql([4,5,7,8,6]);
+  });
+
 });
