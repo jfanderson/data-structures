@@ -13,7 +13,25 @@ setPrototype.add = function(item){
 };
 
 setPrototype.contains = function(item){
+  if (isObject(item)) {
+
+    var storage = this._storage;
+    for (var i = 0; i < storage.length; i++) {
+      if (isObject(storage[i])) {
+        if (JSON.stringify(storage[i]) === JSON.stringify(item)) {
+          return true;
+        }
+      }
+    }
+
+    return false
+  }
+
   return this._storage.indexOf(item) !== -1;
+
+  function isObject(item) {
+    return typeof item === "object" && !Array.isArray(item);
+  }
 };
 
 setPrototype.remove = function(item){
